@@ -11,34 +11,28 @@ app.use(express.static('public'));
 
 // Love quotes database
 const loveQuotes = [
-    "Every day with you is a wonderful addition to my life's journey.",
-    "You're the missing piece I never knew I was searching for.",
-    "In your smile, I see something more beautiful than the stars.",
-    "Loving you is like breathing - I can't stop and I don't want to.",
-    "You are the source of my joy, the center of my world, and the whole of my heart.",
-    "If I had to choose between breathing and loving you, I would use my last breath to say I love you.",
-    "My love for you is a journey starting at forever and ending at never.",
-    "I saw that you were perfect, and so I loved you. Then I saw that you were not perfect and I loved you even more.",
-    "You are my sun, my moon, and all my stars.",
-    "I love you not only for what you are but for what I am when I'm with you."
+    "Every moment with you is like a beautiful dream come true. Dear baby jana, you are my everything.",
+    "In your eyes, I found my home. Dear baby jana, my love for you grows stronger each day.",
+    "You are the missing piece I never knew I needed. Dear baby jana, my heart belongs to you forever.",
+    "With every heartbeat, I love you more. Dear baby jana, you complete my world.",
+    "Your smile lights up my darkest days. Dear baby jana, you are my sunshine.",
+    "I never believed in fairy tales until I met you. Dear baby jana, you are my happily ever after.",
+    "In the garden of my heart, you are the most beautiful flower. Dear baby jana, I cherish you always.",
+    "Every love song reminds me of you. Dear baby jana, you are the melody of my soul.",
+    "Your love is the greatest gift I've ever received. Dear baby jana, I'm forever grateful for you.",
+    "With you, every day feels like Valentine's Day. Dear baby jana, my love for you is eternal."
 ];
 
-// Function to get quote of the day (consistent based on date)
+// Function to get quote of the day (based on date)
 function getQuoteOfTheDay() {
     const today = new Date();
     const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
     const quoteIndex = dayOfYear % loveQuotes.length;
-    return `Dear baby jana, ${loveQuotes[quoteIndex]}`;
-}
-
-// Function to get random quote
-function getRandomQuote() {
-    const randomIndex = Math.floor(Math.random() * loveQuotes.length);
-    return `Dear baby jana, ${loveQuotes[randomIndex]}`;
+    return loveQuotes[quoteIndex];
 }
 
 // API Routes
-app.get('/api/quote-of-the-day', (req, res) => {
+app.get('/api/quote', (req, res) => {
     try {
         const quote = getQuoteOfTheDay();
         res.json({
@@ -49,27 +43,19 @@ app.get('/api/quote-of-the-day', (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            error: 'Failed to fetch quote of the day'
+            error: 'Failed to fetch quote'
         });
     }
 });
 
-app.get('/api/random-quote', (req, res) => {
-    try {
-        const quote = getRandomQuote();
-        res.json({
-            success: true,
-            quote: quote
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            error: 'Failed to fetch random quote'
-        });
-    }
+app.get('/api/quotes', (req, res) => {
+    res.json({
+        success: true,
+        quotes: loveQuotes
+    });
 });
 
-// Serve the main page
+// Serve frontend
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });

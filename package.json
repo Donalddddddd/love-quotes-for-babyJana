@@ -1,7 +1,7 @@
 {
-  "name": "love-quotes-app",
+  "name": "love-quotes-system",
   "version": "1.0.0",
-  "description": "A beautiful love quotes generator for Baby Jana",
+  "description": "Daily love quotes for Baby Jana",
   "main": "api/index.js",
   "scripts": {
     "start": "node api/index.js",
@@ -14,8 +14,7 @@
     "dotenv": "^16.3.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1",
-    "vercel": "^32.0.0"
+    "nodemon": "^3.0.1"
   },
   "engines": {
     "node": "22.x"

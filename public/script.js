@@ -1,18 +1,12 @@
 class LoveQuotesApp {
     constructor() {
-        this.initializeApp();
-        this.bindEvents();
+        this.init();
     }
 
-    initializeApp() {
+    async init() {
         this.displayCurrentDate();
-        this.loadQuoteOfTheDay();
-    }
-
-    bindEvents() {
-        document.getElementById('generateRandom').addEventListener('click', () => {
-            this.generateRandomQuote();
-        });
+        await this.loadQuoteOfTheDay();
+        this.startAnimations();
     }
 
     displayCurrentDate() {
@@ -23,116 +17,74 @@ class LoveQuotesApp {
             month: 'long', 
             day: 'numeric' 
         };
-        const dateString = now.toLocaleDateString('en-US', options);
-        document.getElementById('currentDate').textContent = dateString;
+        document.getElementById('currentDate').textContent = 
+            now.toLocaleDateString('en-US', options);
     }
 
     async loadQuoteOfTheDay() {
-        const quoteElement = document.getElementById('quoteOfTheDay');
-        
         try {
-            quoteElement.classList.add('loading');
-            
-            const response = await fetch('/api/quote-of-the-day');
+            const response = await fetch('/api/quote');
             const data = await response.json();
             
             if (data.success) {
-                this.typeWriter(quoteElement, data.quote, 50);
+                this.displayQuote(data.quote);
             } else {
-                throw new Error(data.error);
+                this.displayQuote("Dear baby jana, even when things don't go as planned, my love for you remains constant and true.");
             }
         } catch (error) {
-            console.error('Error loading quote of the day:', error);
-            quoteElement.textContent = 'Dear baby jana, even when technology fails, my love for you remains constant. 💖';
-        } finally {
-            quoteElement.classList.remove('loading');
+            console.error('Error loading quote:', error);
+            this.displayQuote("Dear baby jana, my love for you is like the internet - always connected, never failing.");
         }
     }
 
-    async generateRandomQuote() {
-        const quoteElement = document.getElementById('randomQuote');
-        const button = document.getElementById('generateRandom');
+    displayQuote(quote) {
+        const quoteElement = document.getElementById('quoteText');
+        quoteElement.style.opacity = '0';
         
-        try {
-            // Add loading state to button
-            button.disabled = true;
-            button.classList.add('loading');
-            quoteElement.classList.add('loading');
+        setTimeout(() => {
+            quoteElement.textContent = quote;
+            quoteElement.style.opacity = '1';
+        }, 500);
+    }
+
+    startAnimations() {
+        this.animatePets();
+        this.createFloatingHearts();
+    }
+
+    animatePets() {
+        const dog = document.getElementById('dog');
+        const cat = document.getElementById('cat');
+
+        setInterval(() => {
+            dog.style.animation = 'none';
+            cat.style.animation = 'none';
             
-            const response = await fetch('/api/random-quote');
-            const data = await response.json();
+            setTimeout(() => {
+                dog.style.animation = 'bounce 2s ease-in-out infinite';
+                cat.style.animation = 'bounce 2s ease-in-out infinite 0.5s';
+            }, 10);
+        }, 8000);
+    }
+
+    createFloatingHearts() {
+        const container = document.querySelector('.floating-hearts');
+        const hearts = ['💖', '💝', '💘', '💗', '💓'];
+        
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
             
-            if (data.success) {
-                // Add fade out effect
-                quoteElement.style.opacity = '0';
-                
-                setTimeout(() => {
-                    this.typeWriter(quoteElement, data.quote, 30);
-                    quoteElement.style.opacity = '1';
-                    
-                    // Add celebration effect
-                    this.celebrate();
-                }, 300);
-            } else {
-                throw new Error(data.error);
-            }
-        } catch (error) {
-            console.error('Error generating random quote:', error);
-            quoteElement.textContent = 'Dear baby jana, this random quote is specially crafted for you with all my love! 💝';
-        } finally {
-            button.disabled = false;
-            button.classList.remove('loading');
-            quoteElement.classList.remove('loading');
-        }
-    }
-
-    typeWriter(element, text, speed = 50) {
-        element.innerHTML = '';
-        let i = 0;
-        
-        function type() {
-            if (i < text.length) {
-                element.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(type, speed);
-            }
-        }
-        
-        type();
-    }
-
-    celebrate() {
-        // Create floating hearts animation
-        for (let i = 0; i < 5; i++) {
-            this.createFloatingHeart();
-        }
-    }
-
-    createFloatingHeart() {
-        const heart = document.createElement('div');
-        heart.innerHTML = '💖';
-        heart.style.position = 'fixed';
-        heart.style.fontSize = '1.5rem';
-        heart.style.pointerEvents = 'none';
-        heart.style.zIndex = '1000';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.top = '100vh';
-        heart.style.opacity = '1';
-        
-        document.body.appendChild(heart);
-        
-        // Animate the heart
-        const animation = heart.animate([
-            { transform: 'translateY(0) scale(1)', opacity: 1 },
-            { transform: 'translateY(-100vh) scale(0.5)', opacity: 0 }
-        ], {
-            duration: 2000,
-            easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
-        });
-        
-        animation.onfinish = () => {
-            heart.remove();
-        };
+            container.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 10000);
+        }, 1000);
     }
 }
 
@@ -141,13 +93,15 @@ document.addEventListener('DOMContentLoaded', () => {
     new LoveQuotesApp();
 });
 
-// Add service worker for offline functionality (optional)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js').then(function(registration) {
-            console.log('SW registered: ', registration);
-        }).catch(function(registrationError) {
-            console.log('SW registration failed: ', registrationError);
-        });
+// Add some interactive effects
+document.addEventListener('mousemove', (e) => {
+    const hearts = document.querySelectorAll('.heart');
+    const mouseX = e.clientX / window.innerWidth;
+    const mouseY = e.clientY / window.innerHeight;
+    
+    hearts.forEach((heart, index) => {
+        const moveX = (mouseX - 0.5) * 20;
+        const moveY = (mouseY - 0.5) * 20;
+        heart.style.transform = `translate(${moveX}px, ${moveY}px) rotate(${moveX}deg)`;
     });
-}
+});
