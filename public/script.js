@@ -1,83 +1,92 @@
 class LoveQuotesApp {
     constructor() {
-        this.baseUrl = window.location.origin;
-        this.init();
-        this.createFloatingHearts();
+        this.initializeApp();
+        this.bindEvents();
     }
 
-    init() {
-        this.loadTodayQuote();
-        this.setupEventListeners();
-        this.startBackgroundAnimation();
+    initializeApp() {
+        this.displayCurrentDate();
+        this.loadQuoteOfTheDay();
     }
 
-    async loadTodayQuote() {
-        const quoteElement = document.getElementById('todayQuote');
+    bindEvents() {
+        document.getElementById('generateRandom').addEventListener('click', () => {
+            this.generateRandomQuote();
+        });
+    }
+
+    displayCurrentDate() {
+        const now = new Date();
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        };
+        const dateString = now.toLocaleDateString('en-US', options);
+        document.getElementById('currentDate').textContent = dateString;
+    }
+
+    async loadQuoteOfTheDay() {
+        const quoteElement = document.getElementById('quoteOfTheDay');
         
         try {
-            const response = await fetch(`${this.baseUrl}/api/quote/today`);
+            quoteElement.classList.add('loading');
             
-            if (!response.ok) {
-                throw new Error('Failed to fetch quote');
-            }
-            
-            const data = await response.json();
-            this.typeWriterEffect(quoteElement, data.quote);
-            
-        } catch (error) {
-            console.error('Error loading today\'s quote:', error);
-            this.showFallbackQuote(quoteElement, 'today');
-        }
-    }
-
-    async loadRandomQuote() {
-        const button = document.getElementById('randomQuoteBtn');
-        const quoteElement = document.getElementById('randomQuote');
-        
-        // Save original content
-        const originalContent = quoteElement.innerHTML;
-        const originalButtonHTML = button.innerHTML;
-        
-        try {
-            // Add loading state
-            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-            button.disabled = true;
-            
-            quoteElement.innerHTML = `
-                <div class="loading-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            `;
-
-            const response = await fetch(`${this.baseUrl}/api/quote/random`);
-            
-            if (!response.ok) {
-                throw new Error('Failed to fetch random quote');
-            }
-            
+            const response = await fetch('/api/quote-of-the-day');
             const data = await response.json();
             
-            // Clear and type new quote
-            quoteElement.innerHTML = '';
-            this.typeWriterEffect(quoteElement, data.quote);
-            
-            // Add celebration effect
-            this.createCelebrationEffect();
-            
+            if (data.success) {
+                this.typeWriter(quoteElement, data.quote, 50);
+            } else {
+                throw new Error(data.error);
+            }
         } catch (error) {
-            console.error('Error loading random quote:', error);
-            quoteElement.innerHTML = originalContent;
-            this.showError(quoteElement, 'Failed to load quote. Please try again.');
+            console.error('Error loading quote of the day:', error);
+            quoteElement.textContent = 'Dear baby jana, even when technology fails, my love for you remains constant. 💖';
         } finally {
-            // Restore button
-            button.innerHTML = originalButtonHTML;
-            button.disabled = false;
+            quoteElement.classList.remove('loading');
         }
     }
 
-    typeWriterEffect(element, text, speed = 30) {
+    async generateRandomQuote() {
+        const quoteElement = document.getElementById('randomQuote');
+        const button = document.getElementById('generateRandom');
+        
+        try {
+            // Add loading state to button
+            button.disabled = true;
+            button.classList.add('loading');
+            quoteElement.classList.add('loading');
+            
+            const response = await fetch('/api/random-quote');
+            const data = await response.json();
+            
+            if (data.success) {
+                // Add fade out effect
+                quoteElement.style.opacity = '0';
+                
+                setTimeout(() => {
+                    this.typeWriter(quoteElement, data.quote, 30);
+                    quoteElement.style.opacity = '1';
+                    
+                    // Add celebration effect
+                    this.celebrate();
+                }, 300);
+            } else {
+                throw new Error(data.error);
+            }
+        } catch (error) {
+            console.error('Error generating random quote:', error);
+            quoteElement.textContent = 'Dear baby jana, this random quote is specially crafted for you with all my love! 💝';
+        } finally {
+            button.disabled = false;
+            button.classList.remove('loading');
+            quoteElement.classList.remove('loading');
+        }
+    }
+
+    typeWriter(element, text, speed = 50) {
         element.innerHTML = '';
         let i = 0;
         
@@ -92,125 +101,38 @@ class LoveQuotesApp {
         type();
     }
 
-    showFallbackQuote(element, type) {
-        const fallbackQuotes = {
-            today: "Dear baby jana, Even when APIs fail, my love for you never does. You're always in my heart.",
-            random: "Dear baby jana, This quote may be offline, but my love for you is always connected."
-        };
-        
-        this.typeWriterEffect(element, fallbackQuotes[type] || fallbackQuotes.today);
-    }
-
-    showError(element, message) {
-        element.innerHTML = `<span style="color: #ff6b6b;">${message}</span>`;
-    }
-
-    setupEventListeners() {
-        document.getElementById('randomQuoteBtn').addEventListener('click', () => {
-            this.loadRandomQuote();
-        });
-
-        // Keyboard shortcut
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'r' || e.key === 'R') {
-                this.loadRandomQuote();
-            }
-        });
-
-        // Refresh today's quote every hour
-        setInterval(() => {
-            this.loadTodayQuote();
-        }, 60 * 60 * 1000);
-    }
-
-    createFloatingHearts() {
-        const heartsContainer = document.querySelector('.floating-hearts');
-        const heartEmojis = ['💕', '💖', '💗', '💓', '💞', '💝', '💘', '❤️', '🧡', '💛', '💚', '💙', '💜'];
-        
-        const createHeart = () => {
-            const heart = document.createElement('div');
-            heart.className = 'heart-float';
-            heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-            
-            // Random position
-            const left = Math.random() * 100;
-            heart.style.left = left + 'vw';
-            
-            // Random size
-            const size = Math.random() * 25 + 15;
-            heart.style.fontSize = size + 'px';
-            
-            // Random animation duration
-            const duration = Math.random() * 4 + 6;
-            heart.style.animationDuration = duration + 's';
-            
-            // Random delay
-            const delay = Math.random() * 5;
-            heart.style.animationDelay = delay + 's';
-            
-            heartsContainer.appendChild(heart);
-            
-            // Remove heart after animation
-            setTimeout(() => {
-                if (heart.parentNode) {
-                    heart.remove();
-                }
-            }, (duration + delay) * 1000);
-        };
-        
-        // Create initial hearts
-        for (let i = 0; i < 12; i++) {
-            setTimeout(createHeart, i * 500);
-        }
-        
-        // Continue creating hearts
-        setInterval(createHeart, 2000);
-    }
-
-    createCelebrationEffect() {
-        const button = document.getElementById('randomQuoteBtn');
-        const rect = button.getBoundingClientRect();
-        
-        for (let i = 0; i < 8; i++) {
-            setTimeout(() => {
-                this.createSparkle(rect.left + rect.width / 2, rect.top + rect.height / 2);
-            }, i * 100);
+    celebrate() {
+        // Create floating hearts animation
+        for (let i = 0; i < 5; i++) {
+            this.createFloatingHeart();
         }
     }
 
-    createSparkle(x, y) {
-        const sparkle = document.createElement('div');
-        sparkle.style.cssText = `
-            position: fixed;
-            left: ${x}px;
-            top: ${y}px;
-            width: 6px;
-            height: 6px;
-            background: #ff6b6b;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1000;
-        `;
+    createFloatingHeart() {
+        const heart = document.createElement('div');
+        heart.innerHTML = '💖';
+        heart.style.position = 'fixed';
+        heart.style.fontSize = '1.5rem';
+        heart.style.pointerEvents = 'none';
+        heart.style.zIndex = '1000';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = '100vh';
+        heart.style.opacity = '1';
         
-        document.body.appendChild(sparkle);
+        document.body.appendChild(heart);
         
-        const angle = Math.random() * Math.PI * 2;
-        const distance = 50 + Math.random() * 50;
-        const targetX = x + Math.cos(angle) * distance;
-        const targetY = y + Math.sin(angle) * distance;
-        
-        sparkle.animate([
-            { transform: 'scale(1) translate(0, 0)', opacity: 1 },
-            { transform: `scale(0) translate(${targetX - x}px, ${targetY - y}px)`, opacity: 0 }
+        // Animate the heart
+        const animation = heart.animate([
+            { transform: 'translateY(0) scale(1)', opacity: 1 },
+            { transform: 'translateY(-100vh) scale(0.5)', opacity: 0 }
         ], {
-            duration: 800,
-            easing: 'ease-out'
-        }).onfinish = () => sparkle.remove();
-    }
-
-    startBackgroundAnimation() {
-        // Add subtle background animation
-        document.body.style.animation = 'gradientShift 10s ease infinite';
+            duration: 2000,
+            easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+        });
+        
+        animation.onfinish = () => {
+            heart.remove();
+        };
     }
 }
 
@@ -219,28 +141,13 @@ document.addEventListener('DOMContentLoaded', () => {
     new LoveQuotesApp();
 });
 
-// Add service worker-like functionality for offline support
+// Add service worker for offline functionality (optional)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-        // This is a simple offline fallback - in a real app, you'd register a proper service worker
-        console.log('Love Quotes App loaded successfully!');
+        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+            console.log('SW registered: ', registration);
+        }).catch(function(registrationError) {
+            console.log('SW registration failed: ', registrationError);
+        });
     });
 }
-
-// Add some interactive effects
-document.addEventListener('mousemove', (e) => {
-    const hearts = document.querySelectorAll('.heart-float');
-    hearts.forEach(heart => {
-        const rect = heart.getBoundingClientRect();
-        const heartX = rect.left + rect.width / 2;
-        const heartY = rect.top + rect.height / 2;
-        const distance = Math.sqrt(Math.pow(e.clientX - heartX, 2) + Math.pow(e.clientY - heartY, 2));
-        
-        if (distance < 100) {
-            heart.style.transform += ' scale(1.3)';
-            setTimeout(() => {
-                heart.style.transform = heart.style.transform.replace(' scale(1.3)', '');
-            }, 300);
-        }
-    });
-});

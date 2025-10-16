@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "name": "love-quotes-jana",
   "builds": [
     {
       "src": "api/index.js",
