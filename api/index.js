@@ -39,7 +39,7 @@ nodeCron.schedule('0 0 * * *', () => {
 });
 
 // Initialize first quote
-todaysQuote = "Dear baby jana, " + loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
+todaysQuote = loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
 
 // API Routes
 app.get('/api/quote/today', (req, res) => {
