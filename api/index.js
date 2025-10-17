@@ -20,7 +20,8 @@ const loveQuotes = [
     "In the garden of my heart, you are the most beautiful flower. Dear baby jana, I cherish you always.",
     "Every love song reminds me of you. Dear baby jana, you are the melody of my soul.",
     "Your love is the greatest gift I've ever received. Dear baby jana, I'm forever grateful for you.",
-    "With you, every day feels like Valentine's Day. Dear baby jana, my love for you is eternal."
+    "With you, every day feels like Valentine's Day. Dear baby jana, my love for you is eternal.",
+    "Your smile is the sunshine that brightens my darkest days. Dear baby jana, you are my light."
 ];
 
 // Function to get quote of the day (based on date)
