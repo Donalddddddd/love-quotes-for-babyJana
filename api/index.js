@@ -22,7 +22,8 @@ const loveQuotes = [
     "Your love is the greatest gift I've ever received. Dear baby jana, I'm forever grateful for you.",
     "With you, every day feels like Valentine's Day. Dear baby jana, my love for you is eternal.",
     "Your smile is the sunshine that brightens my darkest days. Dear baby jana, you are my light.",
-    "Loving you is the easiest and most natural thing I have ever done. Dear baby jana, you are my destiny"
+    "Loving you is the easiest and most natural thing I have ever done. Dear baby jana, you are my destiny",
+    "I never knew what happiness was until you came into my life. Dear baby jana, you are my joy."
 ];
 
 // Function to get quote of the day (based on date)
