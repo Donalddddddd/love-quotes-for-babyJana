@@ -29,7 +29,8 @@ const loveQuotes = [
     "Every time I see you, my heart skips a beat. Dear baby jana, you take my breath away.",
     "I fall in love with you more and more every single day. Dear baby jana, you are my forever.",
     "Your love is the greatest gift I have ever received. Dear baby jana, I cherish you.",
-    "You are my today and all of my tomorrows. Dear baby jana, you are my future."
+    "You are my today and all of my tomorrows. Dear baby jana, you are my future.",
+    "In your arms, I have found my paradise. Dear baby jana, you are my safe haven."
 ];
 
 // Function to get quote of the day (based on date)
