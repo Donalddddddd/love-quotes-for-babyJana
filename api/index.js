@@ -31,7 +31,8 @@ const loveQuotes = [
     "Your love is the greatest gift I have ever received. Dear baby jana, I cherish you.",
     "You are my today and all of my tomorrows. Dear baby jana, you are my future.",
     "In your arms, I have found my paradise. Dear baby jana, you are my safe haven.",
-    "In your arms, I have found my paradise. Dear baby jana, you are my safe haven."
+    "In your arms, I have found my paradise. Dear baby jana, you are my safe haven.",
+    "I loved you yesterday, I love you still, I always have, and I always will. Dear baby jana, you are my constant."
 ];
 
 // Function to get quote of the day (based on date)
