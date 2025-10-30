@@ -33,6 +33,7 @@ const loveQuotes = [
     "In your arms, I have found my paradise. Dear baby jana, you are my safe haven.",
     "In your arms, I have found my paradise. Dear baby jana, you are my safe haven.",
     "I loved you yesterday, I love you still, I always have, and I always will. Dear baby jana, you are my constant.",
+    "You are the answer to every prayer I never said. Dear baby jana, you are my wish come true.",
     "You are the answer to every prayer I never said. Dear baby jana, you are my wish come true."
 ];
 
