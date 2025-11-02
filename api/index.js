@@ -36,7 +36,8 @@ const loveQuotes = [
     "You are the answer to every prayer I never said. Dear baby jana, you are my wish come true.",
     "You are the answer to every prayer I never said. Dear baby jana, you are my wish come true.",
     "My love for you is a journey starting at forever and ending at never. Dear baby jana, you are my eternity.",
-    "You are the last thought on my mind before I sleep and the first when I wake. Dear baby jana, you are my dream."
+    "You are the last thought on my mind before I sleep and the first when I wake. Dear baby jana, you are my dream.",
+    "I didn't choose you, my heart did. Dear baby jana, you are my only choice.",
 ];
 
 // Function to get quote of the day (based on date)
