@@ -38,6 +38,7 @@ const loveQuotes = [
     "My love for you is a journey starting at forever and ending at never. Dear baby jana, you are my eternity.",
     "You are the last thought on my mind before I sleep and the first when I wake. Dear baby jana, you are my dream.",
     "I didn't choose you, my heart did. Dear baby jana, you are my only choice.",
+    "Your voice is my favorite sound, and your name is my favorite word. Dear baby jana, you are my melody.",
     "Your voice is my favorite sound, and your name is my favorite word. Dear baby jana, you are my melody."
 ];
 
