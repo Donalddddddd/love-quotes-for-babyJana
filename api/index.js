@@ -40,7 +40,8 @@ const loveQuotes = [
     "I didn't choose you, my heart did. Dear baby jana, you are my only choice.",
     "Your voice is my favorite sound, and your name is my favorite word. Dear baby jana, you are my melody.",
     "Your voice is my favorite sound, and your name is my favorite word. Dear baby jana, you are my melody.",
-    "Your voice is my favorite sound, and your name is my favorite word. Dear baby jana, you are my melody."
+    "Your voice is my favorite sound, and your name is my favorite word. Dear baby jana, you are my melody.",
+    "I am so incredibly in love with every part of you. Dear baby jana, you are my perfection."
 ];
 
 // Function to get quote of the day (based on date)
