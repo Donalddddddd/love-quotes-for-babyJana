@@ -42,6 +42,7 @@ const loveQuotes = [
     "Your voice is my favorite sound, and your name is my favorite word. Dear baby jana, you are my melody.",
     "Your voice is my favorite sound, and your name is my favorite word. Dear baby jana, you are my melody.",
     "I am so incredibly in love with every part of you. Dear baby jana, you are my perfection.",
+    "You are my favorite hello and my hardest goodbye. Dear baby jana, I miss you always.",
     "You are my favorite hello and my hardest goodbye. Dear baby jana, I miss you always."
 ];
 
