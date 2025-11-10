@@ -44,7 +44,8 @@ const loveQuotes = [
     "I am so incredibly in love with every part of you. Dear baby jana, you are my perfection.",
     "You are my favorite hello and my hardest goodbye. Dear baby jana, I miss you always.",
     "You are my favorite hello and my hardest goodbye. Dear baby jana, I miss you always.",
-    "With you, I can conquer the world. Dear baby jana, you are my strength."
+    "With you, I can conquer the world. Dear baby jana, you are my strength.",
+    "You are the star that guides me home. Dear baby jana, you are my direction."
 ];
 
 // Function to get quote of the day (based on date)
