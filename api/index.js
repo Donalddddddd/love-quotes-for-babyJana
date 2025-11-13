@@ -47,7 +47,8 @@ const loveQuotes = [
     "With you, I can conquer the world. Dear baby jana, you are my strength.",
     "You are the star that guides me home. Dear baby jana, you are my direction.",
     "You are the star that guides me home. Dear baby jana, you are my direction.",
-    "You are the star that guides me home. Dear baby jana, you are my direction."
+    "You are the star that guides me home. Dear baby jana, you are my direction.",
+    "I never want to stop making memories with you. Dear baby jana, you are my favorite adventure."
 ];
 
 // Function to get quote of the day (based on date)
