@@ -54,6 +54,7 @@ const loveQuotes = [
     "I never want to stop making memories with you. Dear baby jana, you are my favorite adventure.",
     "You saw the mess I am and still chose to love me. Dear baby jana, you are my acceptance.",
     "My world is infinitely better with you in it. Dear baby jana, you are my blessing.",
+    "My world is infinitely better with you in it. Dear baby jana, you are my blessing.",
     "My world is infinitely better with you in it. Dear baby jana, you are my blessing."
 ];
 
