@@ -60,6 +60,7 @@ const loveQuotes = [
     "My world is infinitely better with you in it. Dear baby jana, you are my blessing.",
     "You are the missing piece to the puzzle of my life. Dear baby jana, with you, I am whole.",
     "You are the missing piece to the puzzle of my life. Dear baby jana, with you, I am whole.",
+    "You saw the mess I am and still chose to love me. Dear baby jana, you are my acceptance.",
     "You saw the mess I am and still chose to love me. Dear baby jana, you are my acceptance."
 ];
 
