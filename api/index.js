@@ -72,7 +72,10 @@ const loveQuotes = [
     "You saw the mess I am and still chose to love me. Dear baby jana, you are my acceptance.",
     "You saw the mess I am and still chose to love me. Dear baby jana, you are my acceptance.",
     "You saw the mess I am and still chose to love me. Dear baby jana, you are my acceptance.",
+    "You saw the mess I am and still chose to love me. Dear baby jana, you are my acceptance.",
     "You saw the mess I am and still chose to love me. Dear baby jana, you are my acceptance."
+
+
 ];
 
 // Function to get quote of the day (based on date)
